@@ -29,6 +29,7 @@ end
 
 
 %% Łysy pedał to test czy umim gita
+%% branch mareg
 
 
 % %K=1; Warstwa 1:
