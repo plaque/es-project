@@ -28,7 +28,7 @@ end
 
 
 
-
+%% Łysy pedał to test czy umim gita
 
 
 % %K=1; Warstwa 1:
