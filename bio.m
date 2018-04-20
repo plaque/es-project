@@ -1,31 +1,58 @@
 clear all;
+
+B = generate_dyadic_grid(8, 256, 256, 90);
+
+function B = generate_dyadic_grid(n_layers, x_dim_size, y_dim_size, variance_surround)
 %%% Gaussian Kernels:
-    n = 8; %liczba warstw
-    x = 256;
-    y = 256;
+    n_layers = 8; %liczba warstw
 %Warunek: variance_center < variance_surround and variance_center = (1/3) variance_surround
-    variance_surround = 90;
+%    variance_surround = 90;
     variance_center = (1/3)*variance_surround;
     
 %Wagi dla Gaussianów:
     w_c = 1;
     w_s = 1;
     
-for k = 1:n
-    
-   c = fspecial('gaussian', [x/(2^(k-1)) y/(2^(k-1))], variance_center/(2^(k-1)));
-   s = fspecial('gaussian', [x/(2^(k-1)) y/(2^(k-1))], variance_surround/(2^(k-1)));
-   DoG = c-s;
-   B(:,:,k+1) = repmat(DoG,2^(k-1));
-   
-   figure(k)
-   image(B(:,:,k+1),'CDataMapping','scaled')
-   colormap gray
-   colorbar;
-   
-   
+    for k = 1:n_layers
+
+       c = fspecial('gaussian', [x_dim_size/(2^(k-1)) y_dim_size/(2^(k-1))], variance_center/(2^(k-1)));
+       s = fspecial('gaussian', [x_dim_size/(2^(k-1)) y_dim_size/(2^(k-1))], variance_surround/(2^(k-1)));
+       DoG = c-s;
+       B(:,:,k+1) = repmat(DoG,2^(k-1));
+
+%        figure(k)
+%        image(B(:,:,k+1),'CDataMapping','scaled')
+%        colormap gray
+%        colorbar;
+    end
 end
 
+% %%% Gaussian Kernels:
+%     n = 8; %liczba warstw
+%     x = 256;
+%     y = 256;
+% %Warunek: variance_center < variance_surround and variance_center = (1/3) variance_surround
+%     variance_surround = 90;
+%     variance_center = (1/3)*variance_surround;
+%     
+% %Wagi dla Gaussianów:
+%     w_c = 1;
+%     w_s = 1;
+%     
+% for k = 1:n
+%     
+%    c = fspecial('gaussian', [x/(2^(k-1)) y/(2^(k-1))], variance_center/(2^(k-1)));
+%    s = fspecial('gaussian', [x/(2^(k-1)) y/(2^(k-1))], variance_surround/(2^(k-1)));
+%    DoG = c-s;
+%    B(:,:,k+1) = repmat(DoG,2^(k-1));
+%    
+%    figure(k)
+%    image(B(:,:,k+1),'CDataMapping','scaled')
+%    colormap gray
+%    colorbar;
+%    
+%    
+% end
 
 
 %% Łysy pedał to test czy umim gita
